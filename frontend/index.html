@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Edge AI Vehicle Health & Predictive Maintenance</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<div class="layout">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <h2>🚗 Fleet Selector</h2>
+
+    <label for="vehicleSelect">Select Vehicle</label>
+    <select id="vehicleSelect"></select>
+
+    <hr />
+
+    <label for="daySlider">Simulated Day (drag to replay history)
+      <span id="dayLabel">0</span>
+    </label>
+    <input type="range" id="daySlider" min="0" max="0" value="0" />
+
+    <label class="checkbox-row">
+      <input type="checkbox" id="autoplayToggle" />
+      ▶️ Auto-play live feed
+    </label>
+
+    <hr />
+
+    <p class="sidebar-note">
+      This prototype replays synthetic OBD-II sensor logs through a FastAPI
+      backend that runs the trained edge AI model on every request, as if new
+      readings were streaming in live from the vehicle.
+    </p>
+
+    <hr />
+    <p class="sidebar-note api-status">
+      Backend status: <span id="apiStatus">checking…</span>
+    </p>
+  </aside>
+
+  <!-- Main content -->
+  <main class="main">
+    <div class="title-row">
+      <span class="title-icon">🚗</span>
+      <div>
+        <h1>Edge AI Vehicle Health & Predictive Maintenance</h1>
+        <p class="subtitle" id="subtitle">Loading vehicle data…</p>
+      </div>
+    </div>
+
+    <div class="grid-top">
+      <!-- Health score -->
+      <section class="card">
+        <h3>Vehicle Health Score</h3>
+        <canvas id="gaugeCanvas" width="260" height="180"></canvas>
+        <p class="status-line">Status: <span id="statusLabel">—</span></p>
+      </section>
+
+      <!-- Alert -->
+      <section class="card">
+        <h3>🔔 Alert</h3>
+        <div id="alertBox" class="alert-box alert-neutral">Loading…</div>
+        <h4>Component fault probability breakdown</h4>
+        <div id="componentBars" class="component-bars"></div>
+      </section>
+
+      <!-- RUL -->
+      <section class="card">
+        <h3>⏳ Remaining Useful Life (est.)</h3>
+        <div id="rulList" class="rul-list"></div>
+      </section>
+    </div>
+
+    <hr />
+
+    <h3>📡 Live Sensor Readings</h3>
+    <div id="sensorTiles" class="sensor-tiles"></div>
+
+    <hr />
+
+    <h3>📈 Sensor History (up to selected day)</h3>
+    <div class="grid-charts">
+      <div class="card">
+        <canvas id="chartEngineVib"></canvas>
+      </div>
+      <div class="card">
+        <canvas id="chartBattBrake"></canvas>
+      </div>
+    </div>
+
+    <p class="footnote">
+      Prototype note: sensor data is synthetic, generated to mimic realistic
+      degradation curves for engine, battery, brake, and tire subsystems. The
+      FastAPI backend runs the same trained scikit-learn models as the
+      original prototype; in production it would ingest live OBD-II / IoT
+      data over MQTT and run on an edge device such as a Raspberry Pi or
+      NVIDIA Jetson Nano, with this same REST API exposed locally.
+    </p>
+  </main>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
