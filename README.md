@@ -1,5 +1,10 @@
 # Edge AI Vehicle Health & Predictive Maintenance — Full-Stack Version
+## 🔗 Live Demo
+**https://vehicle-health-ai.onrender.com**
 
+> Note: hosted on Render's free tier, so the server sleeps after 15 minutes
+> of inactivity. If it's been idle, the first load may take 30–60 seconds
+> to wake up — this is normal, not a bug.
 A real client-server architecture: a **FastAPI backend** that runs the trained
 ML models and exposes them as a REST API, plus a **static HTML/JS frontend**
 that calls that API. One command starts the whole app.
